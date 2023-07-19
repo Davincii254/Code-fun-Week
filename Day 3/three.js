@@ -23,37 +23,53 @@
 // string S is made only of the following characters: '<', '>' and/or '?'.
 
 function solution(S) {
-    // Implement your solution here
+    // Initialize a variable to keep track of the maximum length of the symmetric substring
     let max = 0;
 
-    for(let i=0; i<S.length; i++){
-        for(let j=S.length-1; j>i; j--){
-            let length = symmetricLength(S,i,j)
-            if (length > max){
+    // Loop through all possible substrings by using two pointers (i and j)
+    for (let i = 0; i < S.length; i++) {
+        for (let j = S.length - 1; j > i; j--) {
+            // Calculate the length of the current substring (i to j)
+            let length = symmetricLength(S, i, j);
+
+            // Update the maximum length if the current length is greater than the current maximum
+            if (length > max) {
                 max = length;
             }
         }
     }
+
+    // Return the maximum length of the symmetric substring
     return max;
 }
 
-function symmetricLength(S,i,j){
-    let length = (j-i)+1
-    if (length%2 !== 0){
+// Function to calculate the length of a symmetric substring between two indices (i and j)
+function symmetricLength(S, i, j) {
+    // Calculate the length of the current substring
+    let length = (j - i) + 1;
+
+    // If the length is odd, the substring cannot be symmetric
+    if (length % 2 !== 0) {
         return 0;
     }
 
-    while(i<j){
-       
-        let a = S[i]
-        let b = S[j]
+    // Use two pointers (i and j) to check if the substring is symmetric
+    while (i < j) {
+        // Get the characters at the current positions
+        let a = S[i];
+        let b = S[j];
 
-        if ((a ==="?" && b === "?")||(a ==="<" && b === "?")||(a ==="?" && b === ">")||(a ==="<" && b === ">")){
+        // Check if the characters are valid to form a symmetric substring
+        if ((a === "?" && b === "?") || (a === "<" && b === "?") || (a === "?" && b === ">") || (a === "<" && b === ">")) {
+            // If valid, move the pointers inward to check the next characters
             i++;
             j--;
+        } else {
+            // If not valid, the substring is not symmetric, return 0
+            return 0;
         }
-        else {return 0;}
     }
-    return length;  
 
+    // Return the length of the symmetric substring
+    return length;
 }

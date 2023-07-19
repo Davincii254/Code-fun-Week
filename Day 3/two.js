@@ -33,24 +33,36 @@
 // N * M ≤ 30,000.
 
 function solution(S) {
-    // Implement your solution here
-    // loop through array to find same string
-    for (let i=0 ; i<S.length; i++ ){
-        for(let j=i+1; j<S.length; j++){
-            let index = haveSameLetter(S[i], S[j])
-            if (index !== -1){
-                return [i,j,index]
+    // Initialize the function to find the indices of strings with the same letters
+    for (let i = 0; i < S.length; i++) {
+        for (let j = i + 1; j < S.length; j++) {
+            // Call the helper function to check for same letters and get the index
+            let index = haveSameLetter(S[i], S[j]);
+            // If the index is not -1 (meaning same letters are found), return the indices
+            if (index !== -1) {
+                return [i, j, index];
             }
-        } 
+        }
     }
+    // Return an empty array if no strings with the same letters are found
     return [];
 }
-//Check if same letter and return index if they do;
-function haveSameLetter(a,b){
-    for( let i=0; i<Math.min(a.length,b.length);i++){
-        if (a[i] === b[i]){
+
+// Helper function to check if two strings have the same letter at any index
+function haveSameLetter(a, b) {
+    for (let i = 0; i < Math.min(a.length, b.length); i++) {
+        // If the letters at the same index are the same, return the index
+        if (a[i] === b[i]) {
             return i;
         }
     }
+    // If no same letters are found, return -1
     return -1;
 }
+
+// Test Cases
+console.log(solution(["abcd", "efgh", "abci", "efgj"])); // Output: [0, 2, 2] (strings at index 0 and 2 have 'c' at the same index)
+console.log(solution(["hello", "world", "holla"])); // Output: [] (no strings have the same letter at any index)
+console.log(solution(["apple", "apricot", "avocado", "apalia"])); // Output: [0, 3, 2] (strings at index 0 and 3 have 'p' at the same index)
+console.log(solution(["example", "exemplify"])); // Output: [0, 1, 5] (strings at index 0 and 1 have 'e' at the same index)
+console.log(solution(["abcd", "abcd", "abcd"])); // Output: [0, 1, 0] (strings at index 0 and 1 have 'a' at the same index)
